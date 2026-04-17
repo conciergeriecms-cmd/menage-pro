@@ -86,34 +86,34 @@
   </head>
   <body>
     <div id="loginScreen">
-        <div style="font-size:3.5rem;margin-bottom:10px">&#127968;</div>div>
-        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">Ménage Pro</h1>h1>
-        <p style="color:#a0aec0;font-size:.9rem;margin-bottom:28px">Entrez votre code logement</p>p>
+        <div style="font-size:3.5rem;margin-bottom:10px">&#127968;</div>
+        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">Ménage Pro</h1>
+        <p style="color:#a0aec0;font-size:.9rem;margin-bottom:28px">Entrez votre code logement</p>
         <div class="login-box">
               <input type="text" id="codeInput" placeholder="CODE" maxlength="10" autocomplete="off">
-              <button class="btn-primary" id="btnLogin">Connexion &#8594;</button>button>
-              <div class="error-msg hidden" id="loginError">&#10060; Code invalide</div>div>
-              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; Accès superviseur</a>a></div>div>
-        </div>div>
-    </div>div>
+              <button class="btn-primary" id="btnLogin">Connexion &#8594;</button>
+              <div class="error-msg hidden" id="loginError">&#10060; Code invalide</div>
+              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; Accès superviseur</a></div>
+        </div>
+    </div>
     <div id="supLoginScreen" class="hidden">
-        <div style="font-size:3rem;margin-bottom:10px">&#128065;</div>div>
+        <div style="font-size:3rem;margin-bottom:10px">&#128065;</div>
         <div class="login-box">
-              <h1 style="color:#fff;text-align:center;font-size:1.4rem;margin-bottom:6px">Superviseur</h1>h1>
-              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps réel</p>p>
+              <h1 style="color:#fff;text-align:center;font-size:1.4rem;margin-bottom:6px">Superviseur</h1>
+              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps réel</p>
               <input type="password" id="supPwd" placeholder="Mot de passe" style="letter-spacing:3px">
-              <button class="btn-primary" id="btnSup">Accéder</button>button>
-              <div class="error-msg hidden" id="supErr">&#10060; Mot de passe incorrect</div>div>
-              <div style="margin-top:14px;text-align:center"><a href="#" id="linkBack" style="color:#718096;font-size:.78rem;text-decoration:none">&#8592; Retour</a>a></div>div>
-        </div>div>
-    </div>div>
+              <button class="btn-primary" id="btnSup">Accéder</button>
+              <div class="error-msg hidden" id="supErr">&#10060; Mot de passe incorrect</div>
+              <div style="margin-top:14px;text-align:center"><a href="#" id="linkBack" style="color:#718096;font-size:.78rem;text-decoration:none">&#8592; Retour</a></div>
+        </div>
+    </div>
     <div id="appScreen" class="hidden">
         <header>
               <div>
                       <div id="hdrName" style="font-weight:700;font-size:1rem"></div>
                       <div style="font-size:.73rem;opacity:.75">Checklist ménage</div>
               </div>
-              <button class="btn-logout" id="btnLogout1">Déco</button>button>
+              <button class="btn-logout" id="btnLogout1">Déco</button>
         </header>
         <div class="prog-wrap">
               <div class="prog-top"><span>Progression</span><span id="progTxt">0/8</span></div>
@@ -121,21 +121,21 @@
         </div>
       <div id="tasksCont"></div>
       <div class="sub-wrap">
-          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le ménage complet</button>button>
+          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le ménage complet</button>
       </div>
     </div>
   <div id="successScreen" class="hidden">
     <div style="font-size:5rem;margin-bottom:18px">&#9989;</div>
-    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">Ménage validé !</h2>h2>
-    <p style="color:#2f855a">Toutes les tâches enregistrées.</p>p>
-    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau ménage</button>button>
+    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">Ménage validé !</h2>
+    <p style="color:#2f855a">Toutes les tâches enregistrées.</p>
+    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau ménage</button>
   </div>
   <div id="supervisorScreen" class="hidden">
     <div class="sup-hd">
-        <div><h2 style="font-size:1.1rem">&#128065; Superviseur</h2>h2><div style="font-size:.72rem;opacity:.6;margin-top:2px" id="lastUpd"></div></div>
+        <div><h2 style="font-size:1.1rem">&#128065; Superviseur</h2><div style="font-size:.72rem;opacity:.6;margin-top:2px" id="lastUpd"></div></div>
         <div style="display:flex;gap:7px">
-              <button id="btnRefresh" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.8rem">&#128260;</button>button>
-              <button class="btn-logout" id="btnLogout2">Déco</button>button>
+              <button id="btnRefresh" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.8rem">&#128260;</button>
+              <button class="btn-logout" id="btnLogout2">Déco</button>
         </div>
     </div>
     <div class="nav-t">
@@ -435,7 +435,8 @@
               Object.values(grp).slice(0,25).forEach(function(g){
                       var pills=g.tasks.map(function(t){return '<span class="pill">'+t.tache_nom+'</span>';}).join('');
                       var ph=g.tasks.filter(function(t){return t.photo_url;}).length;
-                      html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' à '+g.h:'')+'</span></h4><div style="font-size:.75rem;color:#718096;margin-bottom:5px">&#128247; '+ph+' photo(s)</div><div class="pills">'+pills+'</div></div>';
+                      var photoImgs=g.tasks.filter(function(t){return t.photo_url;}).map(function(t){return '<div style="margin-top:4px"><div style="font-size:.7rem;color:#a0aec0;margin-bottom:2px">'+t.tache_nom+'</div><img src="'+t.photo_url+'" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;display:block;" onclick="this.style.maxHeight=this.style.maxHeight===\'none\'?\'160px\':\'none\'" loading="lazy"></div>';}).join('');
+            html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' à '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
               });
               c.innerHTML=html;
         }else if(stab==='i'){
