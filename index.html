@@ -79,10 +79,10 @@ header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:14p
   <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">Ménage Pro</h1>
   <p style="color:#a0aec0;font-size:.9rem;margin-bottom:28px">Entrez votre code logement</p>
   <div class="login-box">
-    <input type="text" id="codeInput" placeholder="CODE" maxlength="10" autocomplete="off" oninput="this.value=this.value.toUpperCase()">
-    <button class="btn-primary" onclick="loginAgent()">Connexion →</button>
+    <input type="text" id="codeInput" placeholder="CODE" maxlength="10" autocomplete="off">
+    <button class="btn-primary" id="btnLogin">Connexion →</button>
     <div class="error-msg hidden" id="loginError">❌ Code invalide</div>
-    <div style="margin-top:18px;text-align:center"><a href="#" onclick="showSupLogin(event)" style="color:#718096;font-size:.78rem;text-decoration:none">🔐 Accès superviseur</a></div>
+    <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">🔐 Accès superviseur</a></div>
   </div>
 </div>
 <div id="supLoginScreen" class="hidden">
@@ -91,9 +91,9 @@ header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:14p
     <h1 style="color:#fff;text-align:center;font-size:1.4rem;margin-bottom:6px">Superviseur</h1>
     <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps réel</p>
     <input type="password" id="supPwd" placeholder="Mot de passe" style="letter-spacing:3px">
-    <button class="btn-primary" onclick="loginSup()">Accéder</button>
+    <button class="btn-primary" id="btnSup">Accéder</button>
     <div class="error-msg hidden" id="supErr">❌ Mot de passe incorrect</div>
-    <div style="margin-top:14px;text-align:center"><a href="#" onclick="showLogin(event)" style="color:#718096;font-size:.78rem;text-decoration:none">← Retour</a></div>
+    <div style="margin-top:14px;text-align:center"><a href="#" id="linkBack" style="color:#718096;font-size:.78rem;text-decoration:none">← Retour</a></div>
   </div>
 </div>
 <div id="appScreen" class="hidden">
@@ -102,7 +102,7 @@ header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:14p
       <div id="hdrName" style="font-weight:700;font-size:1rem"></div>
       <div style="font-size:.73rem;opacity:.75">Checklist ménage</div>
     </div>
-    <button class="btn-logout" onclick="logout()">Déco</button>
+    <button class="btn-logout" id="btnLogout1">Déco</button>
   </header>
   <div class="prog-wrap">
     <div class="prog-top"><span>Progression</span><span id="progTxt">0/8</span></div>
@@ -110,27 +110,27 @@ header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:14p
   </div>
   <div id="tasksCont"></div>
   <div class="sub-wrap">
-    <button class="btn-sub" id="subBtn" onclick="submitAll()" disabled>✅ Valider le ménage complet</button>
+    <button class="btn-sub" id="subBtn" disabled>✅ Valider le ménage complet</button>
   </div>
 </div>
 <div id="successScreen" class="hidden">
   <div style="font-size:5rem;margin-bottom:18px">✅</div>
   <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">Ménage validé !</h2>
   <p style="color:#2f855a">Toutes les tâches enregistrées.</p>
-  <button class="btn-primary" onclick="logout()" style="margin-top:28px;max-width:280px">Nouveau ménage</button>
+  <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau ménage</button>
 </div>
 <div id="supervisorScreen" class="hidden">
   <div class="sup-hd">
     <div><h2 style="font-size:1.1rem">👁️ Superviseur</h2><div style="font-size:.72rem;opacity:.6;margin-top:2px" id="lastUpd"></div></div>
     <div style="display:flex;gap:7px">
-      <button style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.8rem" onclick="loadDash()">🔄</button>
-      <button class="btn-logout" onclick="logout()">Déco</button>
+      <button id="btnRefresh" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.8rem">🔄</button>
+      <button class="btn-logout" id="btnLogout2">Déco</button>
     </div>
   </div>
   <div class="nav-t">
-    <div class="nt on" id="nt-v" onclick="swTab('v')">📋 Validations</div>
-    <div class="nt" id="nt-i" onclick="swTab('i')">⚠️ Imprévus</div>
-    <div class="nt" id="nt-l" onclick="swTab('l')">🏠 Logements</div>
+    <div class="nt on" id="nt-v">📋 Validations</div>
+    <div class="nt" id="nt-i">⚠️ Imprévus</div>
+    <div class="nt" id="nt-l">🏠 Logements</div>
   </div>
   <div id="dashCont"></div>
 </div>
@@ -141,10 +141,28 @@ const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const TASKS=[{id:1,n:'Cuisine',e:'🍳',r:true},{id:2,n:'Salon',e:'🛋️',r:true},{id:3,n:'Chambre',e:'🛏️',r:true},{id:4,n:'Salle de bain',e:'🚿',r:true},{id:5,n:'WC',e:'🚽',r:true},{id:6,n:'Couloir',e:'🚪',r:true},{id:7,n:'Linge',e:'👕',r:true},{id:8,n:'Poubelles',e:'🗑️',r:true},{id:9,n:'Terrasse',e:'🌿',r:false},{id:10,n:'Jardin',e:'🌳',r:false}];
 let logement=null,td={},stab='v',siv=null;
+
 function toast(m,d=2500){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
 function hide(){['loginScreen','supLoginScreen','appScreen','successScreen','supervisorScreen'].forEach(id=>document.getElementById(id).classList.add('hidden'));}
-function showLogin(e){if(e)e.preventDefault();hide();document.getElementById('loginScreen').classList.remove('hidden');}
-function showSupLogin(e){if(e)e.preventDefault();hide();document.getElementById('supLoginScreen').classList.remove('hidden');}
+function showLogin(){hide();document.getElementById('loginScreen').classList.remove('hidden');}
+function showSupLogin(){hide();document.getElementById('supLoginScreen').classList.remove('hidden');}
+
+document.getElementById('codeInput').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+document.getElementById('codeInput').addEventListener('keydown',function(e){if(e.key==='Enter')loginAgent();});
+document.getElementById('supPwd').addEventListener('keydown',function(e){if(e.key==='Enter')loginSup();});
+document.getElementById('btnLogin').addEventListener('click',loginAgent);
+document.getElementById('linkSup').addEventListener('click',function(e){e.preventDefault();showSupLogin();});
+document.getElementById('linkBack').addEventListener('click',function(e){e.preventDefault();showLogin();});
+document.getElementById('btnSup').addEventListener('click',loginSup);
+document.getElementById('btnLogout1').addEventListener('click',logout);
+document.getElementById('btnLogout2').addEventListener('click',logout);
+document.getElementById('btnNewMenage').addEventListener('click',logout);
+document.getElementById('btnRefresh').addEventListener('click',loadDash);
+document.getElementById('nt-v').addEventListener('click',function(){swTab('v');});
+document.getElementById('nt-i').addEventListener('click',function(){swTab('i');});
+document.getElementById('nt-l').addEventListener('click',function(){swTab('l');});
+document.getElementById('subBtn').addEventListener('click',submitAll);
+
 async function loginAgent(){
   const code=document.getElementById('codeInput').value.trim().toUpperCase();
   if(!code)return;toast('🔍 Vérification...');
@@ -156,6 +174,7 @@ async function loginAgent(){
   document.getElementById('hdrName').textContent=logement.nom||logement.code;
   renderTasks();hide();document.getElementById('appScreen').classList.remove('hidden');updateProg();window.scrollTo(0,0);
 }
+
 function renderTasks(){
   const c=document.getElementById('tasksCont');c.innerHTML='';
   const r=document.createElement('div');r.className='card';
@@ -165,42 +184,64 @@ function renderTasks(){
   o.innerHTML='<div class="card-head"><span style="font-size:1.3rem">🌟</span><h3>Espaces extérieurs</h3><span class="badge opt">Optionnel</span></div>';
   TASKS.filter(t=>!t.r).forEach(t=>o.appendChild(mkTask(t)));c.appendChild(o);
   const imp=document.createElement('div');imp.className='card';
-  imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">⚠️</span><h3>Signaler un imprèvu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="Décrivez le problème..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box" id="impPh" style="margin-top:10px"><input type="file" accept="image/*" capture="environment" onchange="handleImpPh(event)"><div class="ph-hint"><span class="ico">📷</span>Photo de l'imprèvu</div></div></div>';
+  imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">⚠️</span><h3>Signaler un imprèvu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="Décrivez le problème..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box ok-imp" id="impPh" style="margin-top:10px"><input type="file" id="impPhInput" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">📷</span>Photo de l'imprèvu</div></div></div>';
   c.appendChild(imp);
+  document.getElementById('impPhInput').addEventListener('change',handleImpPh);
 }
+
 function mkTask(task){
   const d=document.createElement('div');d.className='ti';d.id='ti-'+task.id;
-  d.innerHTML='<div class="ti-top"><span class="ti-ico">'+task.e+'</span><span class="ti-name">'+task.n+(task.r?'':' <span style="color:#a0aec0;font-size:.75rem;font-weight:400">(opt.)</span>')+'</span><div class="ti-check" id="chk-'+task.id+'"></div></div><div class="photo-box" id="pb-'+task.id+'"><input type="file" accept="image/*" capture="environment" onchange="handlePh(event,'+task.id+')"><div class="ph-hint"><span class="ico">📷</span>'+(task.r?'Photo requise':'Photo optionnelle')+'</div></div><textarea class="note" placeholder="Note..." onchange="td['+task.id+'].note=this.value"></textarea>';
+  d.innerHTML='<div class="ti-top"><span class="ti-ico">'+task.e+'</span><span class="ti-name">'+task.n+(task.r?'':' <span style="color:#a0aec0;font-size:.75rem;font-weight:400">(opt.)</span>')+'</span><div class="ti-check" id="chk-'+task.id+'"></div></div><div class="photo-box" id="pb-'+task.id+'"><input type="file" id="inp-'+task.id+'" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">📷</span>'+(task.r?'Photo requise':'Photo optionnelle')+'</div></div><textarea class="note" id="note-'+task.id+'" placeholder="Note..."></textarea>';
   return d;
 }
-function handlePh(ev,id){
-  const f=ev.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=e=>{
-    td[id].f=f;td[id].d=true;
-    const pb=document.getElementById('pb-'+id);
-    pb.classList.add('ok');
-    pb.innerHTML='<img src="'+e.target.result+'"><input type="file" accept="image/*" capture="environment" onchange="handlePh(event,'+id+')" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">';
-    const chk=document.getElementById('chk-'+id);chk.classList.add('ok');chk.textContent='✓';
-    updateProg();toast('✅ '+TASKS.find(t=>t.id===id).n+' validé !');
-  };
-  r.readAsDataURL(f);
+
+function setupTaskListeners(){
+  TASKS.forEach(task=>{
+    const inp=document.getElementById('inp-'+task.id);
+    if(inp){
+      inp.addEventListener('change',function(ev){
+        const f=ev.target.files[0];if(!f)return;
+        const r=new FileReader();
+        r.onload=function(e){
+          td[task.id].f=f;td[task.id].d=true;
+          const pb=document.getElementById('pb-'+task.id);
+          pb.classList.add('ok');
+          pb.innerHTML='<img src="'+e.target.result+'"><input type="file" id="inp2-'+task.id+'" accept="image/*" capture="environment" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">';
+          document.getElementById('inp2-'+task.id).addEventListener('change',function(ev2){
+            const f2=ev2.target.files[0];if(!f2)return;
+            td[task.id].f=f2;
+            const r2=new FileReader();r2.onload=function(e2){pb.innerHTML='<img src="'+e2.target.result+'"><input type="file" id="inp2-'+task.id+'" accept="image/*" capture="environment" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">';};r2.readAsDataURL(f2);
+          });
+          const chk=document.getElementById('chk-'+task.id);chk.classList.add('ok');chk.textContent='✓';
+          updateProg();toast('✅ '+task.n+' validé !');
+        };r.readAsDataURL(f);
+      });
+    }
+    const note=document.getElementById('note-'+task.id);
+    if(note)note.addEventListener('change',function(){td[task.id].note=this.value;});
+  });
 }
+
 function handleImpPh(ev){
   const f=ev.target.files[0];if(!f)return;window._impF=f;
   const r=new FileReader();
-  r.onload=e=>{
+  r.onload=function(e){
     const pb=document.getElementById('impPh');pb.classList.add('ok');
-    pb.innerHTML='<img src="'+e.target.result+'"><input type="file" accept="image/*" capture="environment" onchange="handleImpPh(event)" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">';
+    pb.innerHTML='<img src="'+e.target.result+'"><input type="file" id="impPhInput2" accept="image/*" capture="environment" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">';
+    document.getElementById('impPhInput2').addEventListener('change',handleImpPh);
   };r.readAsDataURL(f);
 }
+
+const origRenderTasks=renderTasks;
+function renderTasks(){origRenderTasks();setTimeout(setupTaskListeners,100);}
+
 function updateProg(){
   const req=TASKS.filter(t=>t.r),done=req.filter(t=>td[t.id]&&td[t.id].d).length;
-  const pct=(done/req.length)*100;
-  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progFill').style.width=(done/req.length*100)+'%';
   document.getElementById('progTxt').textContent=done+'/'+req.length;
   document.getElementById('subBtn').disabled=done<req.length;
 }
+
 async function upPhoto(f,name){
   try{
     const ext=f.name.split('.').pop()||'jpg';
@@ -210,14 +251,14 @@ async function upPhoto(f,name){
     return sb.storage.from('menage-photos').getPublicUrl(path).data.publicUrl;
   }catch(e){return null;}
 }
+
 async function submitAll(){
   const btn=document.getElementById('subBtn');btn.disabled=true;btn.textContent='⏳ Enregistrement...';
   try{
     const h=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
     for(const task of TASKS){
       if(!td[task.id].d)continue;
-      let url=null;
-      if(td[task.id].f){toast('📤 '+task.n+'...');url=await upPhoto(td[task.id].f,task.n);}
+      let url=null;if(td[task.id].f){toast('📤 '+task.n+'...');url=await upPhoto(td[task.id].f,task.n);}
       await sb.from('validations').insert({logement_code:logement.code,tache_id:task.id,tache_nom:task.n,photo_url:url,heure:h});
     }
     const desc=(document.getElementById('impDesc').value||'').trim();
@@ -228,15 +269,18 @@ async function submitAll(){
     hide();document.getElementById('successScreen').classList.remove('hidden');window._impF=null;
   }catch(e){toast('❌ '+e.message);btn.disabled=false;btn.textContent='✅ Valider le ménage complet';}
 }
+
 function loginSup(){
   if(document.getElementById('supPwd').value!=='Didine2024!'){document.getElementById('supErr').classList.remove('hidden');return;}
   document.getElementById('supErr').classList.add('hidden');
   hide();document.getElementById('supervisorScreen').classList.remove('hidden');
   loadDash();if(siv)clearInterval(siv);siv=setInterval(loadDash,30000);
 }
+
 function swTab(t){
   stab=t;['v','i','l'].forEach(x=>document.getElementById('nt-'+x).classList.toggle('on',x===t));loadDash();
 }
+
 async function loadDash(){
   document.getElementById('lastUpd').textContent='Mis à jour '+new Date().toLocaleTimeString('fr-FR');
   const c=document.getElementById('dashCont');
@@ -267,13 +311,12 @@ async function loadDash(){
     html+='</div>';c.innerHTML=html;
   }
 }
+
 function logout(){
   logement=null;td={};window._impF=null;
   if(siv){clearInterval(siv);siv=null;}
-  document.getElementById('codeInput').value='';document.getElementById('supPwd').value='';showLogin(null);
+  document.getElementById('codeInput').value='';document.getElementById('supPwd').value='';showLogin();
 }
-document.getElementById('codeInput').addEventListener('keydown',e=>{if(e.key==='Enter')loginAgent();});
-document.getElementById('supPwd').addEventListener('keydown',e=>{if(e.key==='Enter')loginSup();});
 </script>
 </body>
 </html>
