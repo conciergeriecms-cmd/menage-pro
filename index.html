@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>MÃ©nage Pro</title>
+    <title>MÃÂ©nage Pro</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -81,28 +81,28 @@
     .log-item .log-info{flex:1}
     .log-item .log-name{font-weight:600;color:#2d3748;font-size:.88rem}
     .log-item .log-code{font-size:.75rem;color:#667eea;font-family:monospace;margin-top:2px}
-    .btn-del{background:#fed7d7;color:#c53030;border:none;border-radius:6px;padding:5px 10px;font-size:.75rem;cursor:pointer}
+    .btn-del{background:#fed7d7;color:#c53030;border:none;border-radius:6px;padding:5px 10px;font-size:.75rem;cursor:pointer} #ownerLoginScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#1a1a2e,#2d3748);padding:20px} #ownerLoginScreen .login-box{background:#2d3748;border:1px solid #4a5568} #ownerLoginScreen .login-box input{background:#1a202c;border-color:#4a5568;color:#fff} #ownerScreen{min-height:100vh;background:#1a1a2e} .owner-hd{background:linear-gradient(135deg,#2d3748,#4a5568);padding:18px;color:#fff;display:flex;justify-content:space-between;align-items:center} .owner-badge{background:#f6ad55;color:#744210;padding:2px 10px;border-radius:20px;font-size:.7rem;font-weight:700}
     </style>
   </head>
   <body>
     <div id="loginScreen">
         <div style="font-size:3.5rem;margin-bottom:10px">&#127968;</div>
-        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">MÃ©nage Pro</h1>
+        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">MÃÂ©nage Pro</h1>
         <p style="color:#a0aec0;font-size:.9rem;margin-bottom:28px">Entrez votre code logement</p>
         <div class="login-box">
               <input type="text" id="codeInput" placeholder="CODE" maxlength="10" autocomplete="off">
               <button class="btn-primary" id="btnLogin">Connexion &#8594;</button>
               <div class="error-msg hidden" id="loginError">&#10060; Code invalide</div>
-              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; AccÃ¨s superviseur</a></div>
+              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; AccÃÂ¨s superviseur</a><br><a href="#" id="linkOwner" style="color:#f6ad55;font-size:.78rem;text-decoration:none;margin-top:6px;display:inline-block">&#127968; Espace propri&#233;taire</a></div>
         </div>
     </div>
     <div id="supLoginScreen" class="hidden">
         <div style="font-size:3rem;margin-bottom:10px">&#128065;</div>
         <div class="login-box">
               <h1 style="color:#fff;text-align:center;font-size:1.4rem;margin-bottom:6px">Superviseur</h1>
-              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps rÃ©el</p>
+              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps rÃÂ©el</p>
               <input type="password" id="supPwd" placeholder="Mot de passe" style="letter-spacing:3px">
-              <button class="btn-primary" id="btnSup">AccÃ©der</button>
+              <button class="btn-primary" id="btnSup">AccÃÂ©der</button>
               <div class="error-msg hidden" id="supErr">&#10060; Mot de passe incorrect</div>
               <div style="margin-top:14px;text-align:center"><a href="#" id="linkBack" style="color:#718096;font-size:.78rem;text-decoration:none">&#8592; Retour</a></div>
         </div>
@@ -111,9 +111,9 @@
         <header>
               <div>
                       <div id="hdrName" style="font-weight:700;font-size:1rem"></div>
-                      <div style="font-size:.73rem;opacity:.75">Checklist mÃ©nage</div>
+                      <div style="font-size:.73rem;opacity:.75">Checklist mÃÂ©nage</div>
               </div>
-              <button class="btn-logout" id="btnLogout1">DÃ©co</button>
+              <button class="btn-logout" id="btnLogout1">DÃÂ©co</button>
         </header>
         <div class="prog-wrap">
               <div class="prog-top"><span>Progression</span><span id="progTxt">0/8</span></div>
@@ -121,26 +121,26 @@
         </div>
       <div id="tasksCont"></div>
       <div class="sub-wrap">
-          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le mÃ©nage complet</button>
+          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le mÃÂ©nage complet</button>
       </div>
     </div>
   <div id="successScreen" class="hidden">
     <div style="font-size:5rem;margin-bottom:18px">&#9989;</div>
-    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">MÃ©nage validÃ© !</h2>
-    <p style="color:#2f855a">Toutes les tÃ¢ches enregistrÃ©es.</p>
-    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau mÃ©nage</button>
+    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">MÃÂ©nage validÃÂ© !</h2>
+    <p style="color:#2f855a">Toutes les tÃÂ¢ches enregistrÃÂ©es.</p>
+    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau mÃÂ©nage</button>
   </div>
   <div id="supervisorScreen" class="hidden">
     <div class="sup-hd">
         <div><h2 style="font-size:1.1rem">&#128065; Superviseur</h2><div style="font-size:.72rem;opacity:.6;margin-top:2px" id="lastUpd"></div></div>
         <div style="display:flex;gap:7px">
               <button id="btnRefresh" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.8rem">&#128260;</button>
-              <button class="btn-logout" id="btnLogout2">DÃ©co</button>
+              <button class="btn-logout" id="btnLogout2">DÃÂ©co</button>
         </div>
     </div>
     <div class="nav-t">
         <div class="nt on" id="nt-v">&#128203; Validations</div>
-        <div class="nt" id="nt-i">&#9888; ImprÃ©vus</div>
+        <div class="nt" id="nt-i">&#9888; ImprÃÂ©vus</div>
         <div class="nt" id="nt-l">&#127968; Logements</div>
     </div>
     <div id="dashCont"></div>
@@ -162,7 +162,7 @@
       {id:9,n:'Terrasse',e:'&#127807;',r:false},
       {id:10,n:'Jardin',e:'&#127795;',r:false}
       ];
-    var logement=null,td={},stab='v',siv=null;
+    var logement=null,td={},stab='v',siv=null,ownerData=null,ostab='v',osiv=null;
 
     function toast(m,d){
         d=d||2500;
@@ -173,7 +173,7 @@
     }
 
     function hide(){
-        ['loginScreen','supLoginScreen','appScreen','successScreen','supervisorScreen'].forEach(function(id){
+        ['loginScreen','supLoginScreen','ownerLoginScreen','appScreen','successScreen','supervisorScreen','ownerScreen'].forEach(function(id){
               document.getElementById(id).classList.add('hidden');
         });
     }
@@ -214,7 +214,17 @@
     document.getElementById('nt-v').addEventListener('click',function(){swTab('v');});
     document.getElementById('nt-i').addEventListener('click',function(){swTab('i');});
     document.getElementById('nt-l').addEventListener('click',function(){swTab('l');});
-    document.getElementById('subBtn').addEventListener('click',submitAll);
+    
+        document.getElementById('linkOwner').addEventListener('click',function(e){e.preventDefault();showOwnerLogin();});
+        document.getElementById('linkBackOwner').addEventListener('click',function(e){e.preventDefault();showLogin();});
+        document.getElementById('btnOwner').addEventListener('click',loginOwner);
+        document.getElementById('ownerRefresh').addEventListener('click',loadOwnerDash);
+        document.getElementById('btnLogoutOwner').addEventListener('click',logout);
+        document.getElementById('ont-v').addEventListener('click',function(){swOwnerTab('v');});
+        document.getElementById('ont-i').addEventListener('click',function(){swOwnerTab('i');});
+        document.getElementById('ownerCode').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+        document.getElementById('ownerCode').addEventListener('keydown',function(e){if(e.key==='Enter')loginOwner();});
+        document.getElementById('subBtn').addEventListener('click',submitAll);
 
     async function loginAgent(){
         var code=document.getElementById('codeInput').value.trim().toUpperCase();
@@ -242,17 +252,17 @@
         c.innerHTML='';
         var r=document.createElement('div');
         r.className='card';
-        r.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#128203;</span><h3>TÃ¢ches obligatoires</h3><span class="badge">8 requises</span></div>';
+        r.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#128203;</span><h3>TÃÂ¢ches obligatoires</h3><span class="badge">8 requises</span></div>';
         TASKS.filter(function(t){return t.r;}).forEach(function(t){r.appendChild(mkTask(t));});
         c.appendChild(r);
         var o=document.createElement('div');
         o.className='card';
-        o.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#127775;</span><h3>Espaces extÃ©rieurs</h3><span class="badge opt">Optionnel</span></div>';
+        o.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#127775;</span><h3>Espaces extÃÂ©rieurs</h3><span class="badge opt">Optionnel</span></div>';
         TASKS.filter(function(t){return !t.r;}).forEach(function(t){o.appendChild(mkTask(t));});
         c.appendChild(o);
         var imp=document.createElement('div');
         imp.className='card';
-        imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#9888;</span><h3>Signaler un imprÃ©vu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="DÃ©crivez le problÃ¨me..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box" id="impPh" style="margin-top:10px"><input type="file" id="impPhInput" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">&#128247;</span>Photo de l\'imprÃ©vu</div></div></div>';
+        imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#9888;</span><h3>Signaler un imprÃÂ©vu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="DÃÂ©crivez le problÃÂ¨me..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box" id="impPh" style="margin-top:10px"><input type="file" id="impPhInput" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">&#128247;</span>Photo de l\'imprÃÂ©vu</div></div></div>';
         c.appendChild(imp);
         document.getElementById('impPhInput').addEventListener('change',handleImpPh);
         setupTaskListeners();
@@ -378,7 +388,7 @@
                       if(window._impF) iurl=await upPhoto(window._impF,'imprev');
                       await sb.from('imprevus').insert({
                                 logement_code:logement.code,
-                                description:desc||'ImprÃ©vu signalÃ©',
+                                description:desc||'ImprÃÂ©vu signalÃÂ©',
                                 photo_url:iurl,
                                 heure:h
                       });
@@ -389,11 +399,63 @@
         }catch(e){
               toast('Erreur: '+e.message);
               btn.disabled=false;
-              btn.textContent='Valider le mÃ©nage complet';
+              btn.textContent='Valider le mÃÂ©nage complet';
         }
     }
 
-    function loginSup(){
+    
+        function showOwnerLogin(){hide();document.getElementById('ownerLoginScreen').classList.remove('hidden');}
+        async function loginOwner(){
+          var code=document.getElementById('ownerCode').value.trim().toUpperCase();
+          if(!code)return;
+          toast('Vérification...');
+          var res=await sb.from('superviseurs').select('*').eq('code',code).single();
+          if(res.error||!res.data){document.getElementById('ownerErr').classList.remove('hidden');return;}
+          document.getElementById('ownerErr').classList.add('hidden');
+          ownerData=res.data;
+          document.getElementById('ownerBadge').textContent=ownerData.logement_code;
+          hide();
+          document.getElementById('ownerScreen').classList.remove('hidden');
+          loadOwnerDash();
+          if(osiv)clearInterval(osiv);
+          osiv=setInterval(loadOwnerDash,30000);
+        }
+        function swOwnerTab(t){
+          ostab=t;
+          ['v','i'].forEach(function(x){document.getElementById('ont-'+x).classList.toggle('on',x===t);});
+          loadOwnerDash();
+        }
+        async function loadOwnerDash(){
+          document.getElementById('ownerUpd').textContent='Mis à jour '+new Date().toLocaleTimeString('fr-FR');
+          var c=document.getElementById('ownerCont');
+          c.innerHTML='<div style="color:#718096;text-align:center;padding:30px;font-size:.85rem">Chargement...</div>';
+          var lg=ownerData.logement_code;
+          if(ostab==='v'){
+            var res=await sb.from('validations').select('*').eq('logement_code',lg).order('created_at',{ascending:false}).limit(100);
+            var data=res.data;
+            if(!data||!data.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucune validation pour ce logement</div>';return;}
+            var grp={};
+            data.forEach(function(v){var dt=new Date(v.created_at).toLocaleDateString('fr-FR');var k=dt+'__'+(v.heure||'');if(!grp[k])grp[k]={dt:dt,h:v.heure,tasks:[]};grp[k].tasks.push(v);});
+            var tot=Object.keys(grp).length;
+            var pics=data.filter(function(v){return v.photo_url;}).length;
+            var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div></div><div class="sec-tit">Historique du ménage</div>';
+            Object.values(grp).forEach(function(g){
+              var pills=g.tasks.map(function(t){return '<span class="pill">'+t.tache_nom+'</span>';}).join('');
+              var ph=g.tasks.filter(function(t){return t.photo_url;}).length;
+              var photoImgs=g.tasks.filter(function(t){return t.photo_url;}).map(function(t){return '<div style="margin-top:4px"><div style="font-size:.7rem;color:#a0aec0;margin-bottom:2px">'+t.tache_nom+'</div><img src="'+t.photo_url+'" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;display:block;" loading="lazy"></div>';}).join('');
+              html+='<div class="s-card"><h4>&#128197; <span class="s-t">'+g.dt+(g.h?' à '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
+            });
+            c.innerHTML=html;
+          } else {
+            var res2=await sb.from('imprevus').select('*').eq('logement_code',lg).order('created_at',{ascending:false}).limit(20);
+            var data2=res2.data;
+            if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprévu signalé</div>';return;}
+            var html2='';
+            data2.forEach(function(imp){var dt=new Date(imp.created_at).toLocaleDateString('fr-FR');html2+='<div class="imp-card"><h4>&#9888;<span class="s-t">'+dt+(imp.heure?' à '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';});
+            c.innerHTML=html2;
+          }
+        }
+        function loginSup(){
         if(document.getElementById('supPwd').value!=='Didine2024!'){
               document.getElementById('supErr').classList.remove('hidden');
               return;
@@ -415,7 +477,7 @@
     }
 
     async function loadDash(){
-        document.getElementById('lastUpd').textContent='Mis Ã  jour '+new Date().toLocaleTimeString('fr-FR');
+        document.getElementById('lastUpd').textContent='Mis ÃÂ  jour '+new Date().toLocaleTimeString('fr-FR');
         var c=document.getElementById('dashCont');
         c.innerHTML='<div style="color:#718096;text-align:center;padding:30px;font-size:.85rem">Chargement...</div>';
         if(stab==='v'){
@@ -432,22 +494,22 @@
               var tot=Object.keys(grp).length;
               var pics=data.filter(function(v){return v.photo_url;}).length;
               var lgs=new Set(data.map(function(v){return v.logement_code;})).size;
-              var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div><div class="stat"><div class="n">'+lgs+'</div><div class="l">Logements</div></div><div class="stat"><div class="n">'+data.length+'</div><div class="l">TÃ¢ches</div></div></div><div class="sec-tit">DerniÃ¨res sessions</div>';
+              var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div><div class="stat"><div class="n">'+lgs+'</div><div class="l">Logements</div></div><div class="stat"><div class="n">'+data.length+'</div><div class="l">TÃÂ¢ches</div></div></div><div class="sec-tit">DerniÃÂ¨res sessions</div>';
               Object.values(grp).slice(0,25).forEach(function(g){
                       var pills=g.tasks.map(function(t){return '<span class="pill">'+t.tache_nom+'</span>';}).join('');
                       var ph=g.tasks.filter(function(t){return t.photo_url;}).length;
                       var photoImgs=g.tasks.filter(function(t){return t.photo_url;}).map(function(t){return '<div style="margin-top:4px"><div style="font-size:.7rem;color:#a0aec0;margin-bottom:2px">'+t.tache_nom+'</div><img src="'+t.photo_url+'" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;display:block;" onclick="this.style.maxHeight=this.style.maxHeight===\'none\'?\'160px\':\'none\'" loading="lazy"></div>';}).join('');
-            html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' Ã  '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
+            html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' ÃÂ  '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
               });
               c.innerHTML=html;
         }else if(stab==='i'){
               var res2=await sb.from('imprevus').select('*').order('created_at',{ascending:false}).limit(50);
               var data2=res2.data;
-              if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprÃ©vu</div>';return;}
+              if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprÃÂ©vu</div>';return;}
               var html2='';
               data2.forEach(function(imp){
                       var dt=new Date(imp.created_at).toLocaleDateString('fr-FR');
-                      html2+='<div class="imp-card"><h4>&#9888; <span class="lbadge">'+imp.logement_code+'</span><span class="s-t">'+dt+(imp.heure?' Ã  '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';
+                      html2+='<div class="imp-card"><h4>&#9888; <span class="lbadge">'+imp.logement_code+'</span><span class="s-t">'+dt+(imp.heure?' ÃÂ  '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';
               });
               c.innerHTML=html2;
         }else{
@@ -470,7 +532,7 @@
                                 if(!nom||!code){toast('Remplissez nom et code');return;}
                                 var ins=await sb.from('logements').insert({nom:nom,code:code});
                                 if(ins.error){toast('Erreur: '+ins.error.message);return;}
-                                toast('Logement ajoutÃ© !');
+                                toast('Logement ajoutÃÂ© !');
                                 document.getElementById('newLogNom').value='';
                                 document.getElementById('newLogCode').value='';
                                 loadDash();
@@ -487,8 +549,11 @@
         logement=null;
         td={};
         window._impF=null;
+        ownerData=null;
         try{sessionStorage.removeItem('menagepro_lg');}catch(e){}
         if(siv){clearInterval(siv);siv=null;}
+        if(osiv){clearInterval(osiv);osiv=null;}
+        document.getElementById('ownerCode').value='';
         document.getElementById('codeInput').value='';
         document.getElementById('supPwd').value='';
         showLogin();
