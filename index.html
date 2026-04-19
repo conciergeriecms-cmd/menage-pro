@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Ménage Pro</title>
+    <title>MÃ©nage Pro</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -87,22 +87,22 @@
   <body>
     <div id="loginScreen">
         <div style="font-size:3.5rem;margin-bottom:10px">&#127968;</div>
-        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">Ménage Pro</h1>
+        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">MÃ©nage Pro</h1>
         <p style="color:#a0aec0;font-size:.9rem;margin-bottom:28px">Entrez votre code logement</p>
         <div class="login-box">
               <input type="text" id="codeInput" placeholder="CODE" maxlength="10" autocomplete="off">
               <button class="btn-primary" id="btnLogin">Connexion &#8594;</button>
               <div class="error-msg hidden" id="loginError">&#10060; Code invalide</div>
-              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; Accès superviseur</a></div>
+              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; AccÃ¨s superviseur</a></div>
         </div>
     </div>
     <div id="supLoginScreen" class="hidden">
         <div style="font-size:3rem;margin-bottom:10px">&#128065;</div>
         <div class="login-box">
               <h1 style="color:#fff;text-align:center;font-size:1.4rem;margin-bottom:6px">Superviseur</h1>
-              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps réel</p>
+              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps rÃ©el</p>
               <input type="password" id="supPwd" placeholder="Mot de passe" style="letter-spacing:3px">
-              <button class="btn-primary" id="btnSup">Accéder</button>
+              <button class="btn-primary" id="btnSup">AccÃ©der</button>
               <div class="error-msg hidden" id="supErr">&#10060; Mot de passe incorrect</div>
               <div style="margin-top:14px;text-align:center"><a href="#" id="linkBack" style="color:#718096;font-size:.78rem;text-decoration:none">&#8592; Retour</a></div>
         </div>
@@ -111,9 +111,9 @@
         <header>
               <div>
                       <div id="hdrName" style="font-weight:700;font-size:1rem"></div>
-                      <div style="font-size:.73rem;opacity:.75">Checklist ménage</div>
+                      <div style="font-size:.73rem;opacity:.75">Checklist mÃ©nage</div>
               </div>
-              <button class="btn-logout" id="btnLogout1">Déco</button>
+              <button class="btn-logout" id="btnLogout1">DÃ©co</button>
         </header>
         <div class="prog-wrap">
               <div class="prog-top"><span>Progression</span><span id="progTxt">0/8</span></div>
@@ -121,26 +121,26 @@
         </div>
       <div id="tasksCont"></div>
       <div class="sub-wrap">
-          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le ménage complet</button>
+          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le mÃ©nage complet</button>
       </div>
     </div>
   <div id="successScreen" class="hidden">
     <div style="font-size:5rem;margin-bottom:18px">&#9989;</div>
-    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">Ménage validé !</h2>
-    <p style="color:#2f855a">Toutes les tâches enregistrées.</p>
-    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau ménage</button>
+    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">MÃ©nage validÃ© !</h2>
+    <p style="color:#2f855a">Toutes les tÃ¢ches enregistrÃ©es.</p>
+    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau mÃ©nage</button>
   </div>
   <div id="supervisorScreen" class="hidden">
     <div class="sup-hd">
         <div><h2 style="font-size:1.1rem">&#128065; Superviseur</h2><div style="font-size:.72rem;opacity:.6;margin-top:2px" id="lastUpd"></div></div>
         <div style="display:flex;gap:7px">
               <button id="btnRefresh" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.8rem">&#128260;</button>
-              <button class="btn-logout" id="btnLogout2">Déco</button>
+              <button class="btn-logout" id="btnLogout2">DÃ©co</button>
         </div>
     </div>
     <div class="nav-t">
         <div class="nt on" id="nt-v">&#128203; Validations</div>
-        <div class="nt" id="nt-i">&#9888; Imprévus</div>
+        <div class="nt" id="nt-i">&#9888; ImprÃ©vus</div>
         <div class="nt" id="nt-l">&#127968; Logements</div>
     </div>
     <div id="dashCont"></div>
@@ -226,9 +226,9 @@
               return;
         }
         document.getElementById('loginError').classList.add('hidden');
-        logement=res.data;
+        logement=res.data; try{sessionStorage.setItem('menagepro_lg',JSON.stringify(logement));}catch(e){}
         td={};
-        TASKS.forEach(function(t){td[t.id]={f:null,d:false,note:''};});
+        TASKS.forEach(function(t){td[t.id]={f:null,d:false,note:'',url:null};});
         document.getElementById('hdrName').textContent=logement.nom||logement.code;
         renderTasks();
         hide();
@@ -242,17 +242,17 @@
         c.innerHTML='';
         var r=document.createElement('div');
         r.className='card';
-        r.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#128203;</span><h3>Tâches obligatoires</h3><span class="badge">8 requises</span></div>';
+        r.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#128203;</span><h3>TÃ¢ches obligatoires</h3><span class="badge">8 requises</span></div>';
         TASKS.filter(function(t){return t.r;}).forEach(function(t){r.appendChild(mkTask(t));});
         c.appendChild(r);
         var o=document.createElement('div');
         o.className='card';
-        o.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#127775;</span><h3>Espaces extérieurs</h3><span class="badge opt">Optionnel</span></div>';
+        o.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#127775;</span><h3>Espaces extÃ©rieurs</h3><span class="badge opt">Optionnel</span></div>';
         TASKS.filter(function(t){return !t.r;}).forEach(function(t){o.appendChild(mkTask(t));});
         c.appendChild(o);
         var imp=document.createElement('div');
         imp.className='card';
-        imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#9888;</span><h3>Signaler un imprévu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="Décrivez le problème..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box" id="impPh" style="margin-top:10px"><input type="file" id="impPhInput" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">&#128247;</span>Photo de l\'imprévu</div></div></div>';
+        imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#9888;</span><h3>Signaler un imprÃ©vu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="DÃ©crivez le problÃ¨me..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box" id="impPh" style="margin-top:10px"><input type="file" id="impPhInput" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">&#128247;</span>Photo de l\'imprÃ©vu</div></div></div>';
         c.appendChild(imp);
         document.getElementById('impPhInput').addEventListener('change',handleImpPh);
         setupTaskListeners();
@@ -303,6 +303,7 @@
                                             chk.textContent=String.fromCharCode(10003);
                                             updateProg();
                                             toast(task.n+' valide !');
+              if(td[task.id].f){upPhoto(td[task.id].f,task.n).then(function(u){if(u)td[task.id].url=u;});}
                                 };
                                 reader.readAsDataURL(f);
                       });
@@ -361,7 +362,7 @@
                       var url=null;
                       if(td[task.id].f){
                                 toast('Upload '+task.n+'...');
-                                url=await upPhoto(td[task.id].f,task.n);
+                                url=td[task.id].url||(td[task.id].f?await upPhoto(td[task.id].f,task.n):null);
                       }
                       await sb.from('validations').insert({
                                 logement_code:logement.code,
@@ -377,7 +378,7 @@
                       if(window._impF) iurl=await upPhoto(window._impF,'imprev');
                       await sb.from('imprevus').insert({
                                 logement_code:logement.code,
-                                description:desc||'Imprévu signalé',
+                                description:desc||'ImprÃ©vu signalÃ©',
                                 photo_url:iurl,
                                 heure:h
                       });
@@ -388,7 +389,7 @@
         }catch(e){
               toast('Erreur: '+e.message);
               btn.disabled=false;
-              btn.textContent='Valider le ménage complet';
+              btn.textContent='Valider le mÃ©nage complet';
         }
     }
 
@@ -414,7 +415,7 @@
     }
 
     async function loadDash(){
-        document.getElementById('lastUpd').textContent='Mis à jour '+new Date().toLocaleTimeString('fr-FR');
+        document.getElementById('lastUpd').textContent='Mis Ã  jour '+new Date().toLocaleTimeString('fr-FR');
         var c=document.getElementById('dashCont');
         c.innerHTML='<div style="color:#718096;text-align:center;padding:30px;font-size:.85rem">Chargement...</div>';
         if(stab==='v'){
@@ -431,22 +432,22 @@
               var tot=Object.keys(grp).length;
               var pics=data.filter(function(v){return v.photo_url;}).length;
               var lgs=new Set(data.map(function(v){return v.logement_code;})).size;
-              var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div><div class="stat"><div class="n">'+lgs+'</div><div class="l">Logements</div></div><div class="stat"><div class="n">'+data.length+'</div><div class="l">Tâches</div></div></div><div class="sec-tit">Dernières sessions</div>';
+              var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div><div class="stat"><div class="n">'+lgs+'</div><div class="l">Logements</div></div><div class="stat"><div class="n">'+data.length+'</div><div class="l">TÃ¢ches</div></div></div><div class="sec-tit">DerniÃ¨res sessions</div>';
               Object.values(grp).slice(0,25).forEach(function(g){
                       var pills=g.tasks.map(function(t){return '<span class="pill">'+t.tache_nom+'</span>';}).join('');
                       var ph=g.tasks.filter(function(t){return t.photo_url;}).length;
                       var photoImgs=g.tasks.filter(function(t){return t.photo_url;}).map(function(t){return '<div style="margin-top:4px"><div style="font-size:.7rem;color:#a0aec0;margin-bottom:2px">'+t.tache_nom+'</div><img src="'+t.photo_url+'" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;display:block;" onclick="this.style.maxHeight=this.style.maxHeight===\'none\'?\'160px\':\'none\'" loading="lazy"></div>';}).join('');
-            html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' à '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
+            html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' Ã  '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
               });
               c.innerHTML=html;
         }else if(stab==='i'){
               var res2=await sb.from('imprevus').select('*').order('created_at',{ascending:false}).limit(50);
               var data2=res2.data;
-              if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprévu</div>';return;}
+              if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprÃ©vu</div>';return;}
               var html2='';
               data2.forEach(function(imp){
                       var dt=new Date(imp.created_at).toLocaleDateString('fr-FR');
-                      html2+='<div class="imp-card"><h4>&#9888; <span class="lbadge">'+imp.logement_code+'</span><span class="s-t">'+dt+(imp.heure?' à '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';
+                      html2+='<div class="imp-card"><h4>&#9888; <span class="lbadge">'+imp.logement_code+'</span><span class="s-t">'+dt+(imp.heure?' Ã  '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';
               });
               c.innerHTML=html2;
         }else{
@@ -469,7 +470,7 @@
                                 if(!nom||!code){toast('Remplissez nom et code');return;}
                                 var ins=await sb.from('logements').insert({nom:nom,code:code});
                                 if(ins.error){toast('Erreur: '+ins.error.message);return;}
-                                toast('Logement ajouté !');
+                                toast('Logement ajoutÃ© !');
                                 document.getElementById('newLogNom').value='';
                                 document.getElementById('newLogCode').value='';
                                 loadDash();
@@ -486,6 +487,7 @@
         logement=null;
         td={};
         window._impF=null;
+        try{sessionStorage.removeItem('menagepro_lg');}catch(e){}
         if(siv){clearInterval(siv);siv=null;}
         document.getElementById('codeInput').value='';
         document.getElementById('supPwd').value='';
