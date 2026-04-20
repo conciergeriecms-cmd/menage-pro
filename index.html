@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>MÃÂ©nage Pro</title>
+    <title>Ménage Pro</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -87,33 +87,59 @@
   <body>
     <div id="loginScreen">
         <div style="font-size:3.5rem;margin-bottom:10px">&#127968;</div>
-        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">MÃÂ©nage Pro</h1>
+        <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">Ménage Pro</h1>
         <p style="color:#a0aec0;font-size:.9rem;margin-bottom:28px">Entrez votre code logement</p>
         <div class="login-box">
               <input type="text" id="codeInput" placeholder="CODE" maxlength="10" autocomplete="off">
               <button class="btn-primary" id="btnLogin">Connexion &#8594;</button>
               <div class="error-msg hidden" id="loginError">&#10060; Code invalide</div>
-              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; AccÃÂ¨s superviseur</a><br><a href="#" id="linkOwner" style="color:#f6ad55;font-size:.78rem;text-decoration:none;margin-top:6px;display:inline-block">&#127968; Espace propri&#233;taire</a></div>
+              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; Accès superviseur</a><br><a href="#" id="linkOwner" style="color:#f6ad55;font-size:.78rem;text-decoration:none;margin-top:6px;display:inline-block">&#127968; Espace propri&#233;taire</a></div>
         </div>
     </div>
     <div id="supLoginScreen" class="hidden">
         <div style="font-size:3rem;margin-bottom:10px">&#128065;</div>
         <div class="login-box">
               <h1 style="color:#fff;text-align:center;font-size:1.4rem;margin-bottom:6px">Superviseur</h1>
-              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps rÃÂ©el</p>
+              <p style="color:#a0aec0;text-align:center;font-size:.85rem;margin-bottom:20px">Tableau de bord temps réel</p>
               <input type="password" id="supPwd" placeholder="Mot de passe" style="letter-spacing:3px">
-              <button class="btn-primary" id="btnSup">AccÃÂ©der</button>
+              <button class="btn-primary" id="btnSup">Accéder</button>
               <div class="error-msg hidden" id="supErr">&#10060; Mot de passe incorrect</div>
               <div style="margin-top:14px;text-align:center"><a href="#" id="linkBack" style="color:#718096;font-size:.78rem;text-decoration:none">&#8592; Retour</a></div>
         </div>
     </div>
-    <div id="appScreen" class="hidden">
+        <div id="ownerLoginScreen" class="hidden">
+        <div class="login-box" style="max-width:400px;margin:auto;margin-top:15vh">
+            <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">&#127968; Espace propriétaire</h1>
+            <p style="color:#a0aec0;margin-bottom:20px">Entrez votre code d'accès propriétaire</p>
+            <input id="ownerCodeInput" type="text" placeholder="Code propriétaire" style="text-transform:uppercase" />
+            <p id="ownerLoginErr" style="color:#fc8181;font-size:.85rem;margin-top:8px;display:none"></p>
+            <button onclick="loginOwner()" style="margin-top:14px;width:100%;padding:14px;background:linear-gradient(135deg,#ed8936,#dd6b20);border:none;border-radius:12px;color:#fff;font-weight:700;font-size:1rem;cursor:pointer">Accéder &#8594;</button>
+            <p style="margin-top:16px;text-align:center"><a href="#" onclick="show('loginScreen')" style="color:#ed8936;font-size:.9rem">&#8592; Retour connexion</a></p>
+        </div>
+    </div>
+    <div id="ownerScreen" class="hidden">
+        <div class="owner-hd">
+            <div>
+                <span style="font-size:1.4rem;font-weight:700">&#127968; Espace Propriétaire</span>
+                <div id="ownerLogBadge" style="font-size:.8rem;color:#a0aec0;margin-top:3px"></div>
+            </div>
+            <button onclick="logout()" style="background:#e53e3e;border:none;border-radius:8px;padding:8px 14px;color:#fff;font-size:.85rem;cursor:pointer">Déconnexion</button>
+        </div>
+        <div style="padding:16px">
+            <div style="display:flex;gap:10px;margin-bottom:16px">
+                <button id="ownerTabV" onclick="swOwnerTab('v')" style="flex:1;padding:10px;border:none;border-radius:8px;background:#667eea;color:#fff;font-weight:600;cursor:pointer">&#9989; Validations</button>
+                <button id="ownerTabI" onclick="swOwnerTab('i')" style="flex:1;padding:10px;border:none;border-radius:8px;background:#2d3748;color:#a0aec0;font-weight:600;cursor:pointer">&#9888;&#65039; Imprévus</button>
+            </div>
+            <div id="ownerDashCont"></div>
+        </div>
+    </div>
+<div id="appScreen" class="hidden">
         <header>
               <div>
                       <div id="hdrName" style="font-weight:700;font-size:1rem"></div>
-                      <div style="font-size:.73rem;opacity:.75">Checklist mÃÂ©nage</div>
+                      <div style="font-size:.73rem;opacity:.75">Checklist ménage</div>
               </div>
-              <button class="btn-logout" id="btnLogout1">DÃÂ©co</button>
+              <button class="btn-logout" id="btnLogout1">Déco</button>
         </header>
         <div class="prog-wrap">
               <div class="prog-top"><span>Progression</span><span id="progTxt">0/8</span></div>
@@ -121,26 +147,26 @@
         </div>
       <div id="tasksCont"></div>
       <div class="sub-wrap">
-          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le mÃÂ©nage complet</button>
+          <button class="btn-sub" id="subBtn" disabled>&#9989; Valider le ménage complet</button>
       </div>
     </div>
   <div id="successScreen" class="hidden">
     <div style="font-size:5rem;margin-bottom:18px">&#9989;</div>
-    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">MÃÂ©nage validÃÂ© !</h2>
-    <p style="color:#2f855a">Toutes les tÃÂ¢ches enregistrÃÂ©es.</p>
-    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau mÃÂ©nage</button>
+    <h2 style="color:#276749;font-size:1.7rem;margin-bottom:8px">Ménage validé !</h2>
+    <p style="color:#2f855a">Toutes les tâches enregistrées.</p>
+    <button class="btn-primary" id="btnNewMenage" style="margin-top:28px;max-width:280px">Nouveau ménage</button>
   </div>
   <div id="supervisorScreen" class="hidden">
     <div class="sup-hd">
         <div><h2 style="font-size:1.1rem">&#128065; Superviseur</h2><div style="font-size:.72rem;opacity:.6;margin-top:2px" id="lastUpd"></div></div>
         <div style="display:flex;gap:7px">
               <button id="btnRefresh" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.8rem">&#128260;</button>
-              <button class="btn-logout" id="btnLogout2">DÃÂ©co</button>
+              <button class="btn-logout" id="btnLogout2">Déco</button>
         </div>
     </div>
     <div class="nav-t">
         <div class="nt on" id="nt-v">&#128203; Validations</div>
-        <div class="nt" id="nt-i">&#9888; ImprÃÂ©vus</div>
+        <div class="nt" id="nt-i">&#9888; Imprévus</div>
         <div class="nt" id="nt-l">&#127968; Logements</div>
     </div>
     <div id="dashCont"></div>
@@ -252,17 +278,17 @@
         c.innerHTML='';
         var r=document.createElement('div');
         r.className='card';
-        r.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#128203;</span><h3>TÃÂ¢ches obligatoires</h3><span class="badge">8 requises</span></div>';
+        r.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#128203;</span><h3>Tâches obligatoires</h3><span class="badge">8 requises</span></div>';
         TASKS.filter(function(t){return t.r;}).forEach(function(t){r.appendChild(mkTask(t));});
         c.appendChild(r);
         var o=document.createElement('div');
         o.className='card';
-        o.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#127775;</span><h3>Espaces extÃÂ©rieurs</h3><span class="badge opt">Optionnel</span></div>';
+        o.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#127775;</span><h3>Espaces extérieurs</h3><span class="badge opt">Optionnel</span></div>';
         TASKS.filter(function(t){return !t.r;}).forEach(function(t){o.appendChild(mkTask(t));});
         c.appendChild(o);
         var imp=document.createElement('div');
         imp.className='card';
-        imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#9888;</span><h3>Signaler un imprÃÂ©vu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="DÃÂ©crivez le problÃÂ¨me..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box" id="impPh" style="margin-top:10px"><input type="file" id="impPhInput" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">&#128247;</span>Photo de l\'imprÃÂ©vu</div></div></div>';
+        imp.innerHTML='<div class="card-head"><span style="font-size:1.3rem">&#9888;</span><h3>Signaler un imprévu</h3><span class="badge opt">Optionnel</span></div><div class="ti"><textarea id="impDesc" placeholder="Décrivez le problème..." class="note" style="height:70px;width:100%;margin-top:0"></textarea><div class="photo-box" id="impPh" style="margin-top:10px"><input type="file" id="impPhInput" accept="image/*" capture="environment"><div class="ph-hint"><span class="ico">&#128247;</span>Photo de l\'imprévu</div></div></div>';
         c.appendChild(imp);
         document.getElementById('impPhInput').addEventListener('change',handleImpPh);
         setupTaskListeners();
@@ -388,7 +414,7 @@
                       if(window._impF) iurl=await upPhoto(window._impF,'imprev');
                       await sb.from('imprevus').insert({
                                 logement_code:logement.code,
-                                description:desc||'ImprÃÂ©vu signalÃÂ©',
+                                description:desc||'Imprévu signalé',
                                 photo_url:iurl,
                                 heure:h
                       });
@@ -399,7 +425,7 @@
         }catch(e){
               toast('Erreur: '+e.message);
               btn.disabled=false;
-              btn.textContent='Valider le mÃÂ©nage complet';
+              btn.textContent='Valider le ménage complet';
         }
     }
 
@@ -477,7 +503,7 @@
     }
 
     async function loadDash(){
-        document.getElementById('lastUpd').textContent='Mis ÃÂ  jour '+new Date().toLocaleTimeString('fr-FR');
+        document.getElementById('lastUpd').textContent='Mis à jour '+new Date().toLocaleTimeString('fr-FR');
         var c=document.getElementById('dashCont');
         c.innerHTML='<div style="color:#718096;text-align:center;padding:30px;font-size:.85rem">Chargement...</div>';
         if(stab==='v'){
@@ -494,22 +520,22 @@
               var tot=Object.keys(grp).length;
               var pics=data.filter(function(v){return v.photo_url;}).length;
               var lgs=new Set(data.map(function(v){return v.logement_code;})).size;
-              var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div><div class="stat"><div class="n">'+lgs+'</div><div class="l">Logements</div></div><div class="stat"><div class="n">'+data.length+'</div><div class="l">TÃÂ¢ches</div></div></div><div class="sec-tit">DerniÃÂ¨res sessions</div>';
+              var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div><div class="stat"><div class="n">'+lgs+'</div><div class="l">Logements</div></div><div class="stat"><div class="n">'+data.length+'</div><div class="l">Tâches</div></div></div><div class="sec-tit">Dernières sessions</div>';
               Object.values(grp).slice(0,25).forEach(function(g){
                       var pills=g.tasks.map(function(t){return '<span class="pill">'+t.tache_nom+'</span>';}).join('');
                       var ph=g.tasks.filter(function(t){return t.photo_url;}).length;
                       var photoImgs=g.tasks.filter(function(t){return t.photo_url;}).map(function(t){return '<div style="margin-top:4px"><div style="font-size:.7rem;color:#a0aec0;margin-bottom:2px">'+t.tache_nom+'</div><img src="'+t.photo_url+'" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;display:block;" onclick="this.style.maxHeight=this.style.maxHeight===\'none\'?\'160px\':\'none\'" loading="lazy"></div>';}).join('');
-            html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' ÃÂ  '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
+            html+='<div class="s-card"><h4>&#127968; <span class="lbadge">'+g.code+'</span><span class="s-t">'+g.dt+(g.h?' à '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
               });
               c.innerHTML=html;
         }else if(stab==='i'){
               var res2=await sb.from('imprevus').select('*').order('created_at',{ascending:false}).limit(50);
               var data2=res2.data;
-              if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprÃÂ©vu</div>';return;}
+              if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprévu</div>';return;}
               var html2='';
               data2.forEach(function(imp){
                       var dt=new Date(imp.created_at).toLocaleDateString('fr-FR');
-                      html2+='<div class="imp-card"><h4>&#9888; <span class="lbadge">'+imp.logement_code+'</span><span class="s-t">'+dt+(imp.heure?' ÃÂ  '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';
+                      html2+='<div class="imp-card"><h4>&#9888; <span class="lbadge">'+imp.logement_code+'</span><span class="s-t">'+dt+(imp.heure?' à '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';
               });
               c.innerHTML=html2;
         }else{
@@ -532,7 +558,7 @@
                                 if(!nom||!code){toast('Remplissez nom et code');return;}
                                 var ins=await sb.from('logements').insert({nom:nom,code:code});
                                 if(ins.error){toast('Erreur: '+ins.error.message);return;}
-                                toast('Logement ajoutÃÂ© !');
+                                toast('Logement ajouté !');
                                 document.getElementById('newLogNom').value='';
                                 document.getElementById('newLogCode').value='';
                                 loadDash();
