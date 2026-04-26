@@ -242,14 +242,6 @@
     document.getElementById('nt-l').addEventListener('click',function(){swTab('l');});
     
         document.getElementById('linkOwner').addEventListener('click',function(e){e.preventDefault();showOwnerLogin();});
-        document.getElementById('linkBackOwner').addEventListener('click',function(e){e.preventDefault();showLogin();});
-        document.getElementById('btnOwner').addEventListener('click',loginOwner);
-        document.getElementById('ownerRefresh').addEventListener('click',loadOwnerDash);
-        document.getElementById('btnLogoutOwner').addEventListener('click',logout);
-        document.getElementById('ont-v').addEventListener('click',function(){swOwnerTab('v');});
-        document.getElementById('ont-i').addEventListener('click',function(){swOwnerTab('i');});
-        document.getElementById('ownerCode').addEventListener('input',function(){this.value=this.value.toUpperCase();});
-        document.getElementById('ownerCode').addEventListener('keydown',function(e){if(e.key==='Enter')loginOwner();});
         document.getElementById('subBtn').addEventListener('click',submitAll);
 
     async function loginAgent(){
