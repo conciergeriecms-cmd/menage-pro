@@ -93,7 +93,7 @@
               <input type="text" id="codeInput" placeholder="CODE" maxlength="10" autocomplete="off">
               <button class="btn-primary" id="btnLogin">Connexion &#8594;</button>
               <div class="error-msg hidden" id="loginError">&#10060; Code invalide</div>
-              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; Accès superviseur</a><br><a href="#" id="linkOwner" style="color:#f6ad55;font-size:.78rem;text-decoration:none;margin-top:6px;display:inline-block">&#127968; Espace propri&#233;taire</a></div>
+              <div style="margin-top:18px;text-align:center"><a href="#" id="linkSup" style="color:#718096;font-size:.78rem;text-decoration:none">&#128274; Accès superviseur</a></div>
         </div>
     </div>
     <div id="supLoginScreen" class="hidden">
@@ -105,32 +105,6 @@
               <button class="btn-primary" id="btnSup">Accéder</button>
               <div class="error-msg hidden" id="supErr">&#10060; Mot de passe incorrect</div>
               <div style="margin-top:14px;text-align:center"><a href="#" id="linkBack" style="color:#718096;font-size:.78rem;text-decoration:none">&#8592; Retour</a></div>
-        </div>
-    </div>
-        <div id="ownerLoginScreen" class="hidden">
-        <div class="login-box" style="max-width:400px;margin:auto;margin-top:15vh">
-            <h1 style="color:#fff;font-size:1.7rem;margin-bottom:6px">&#127968; Espace propriétaire</h1>
-            <p style="color:#a0aec0;margin-bottom:20px">Entrez votre code d'accès propriétaire</p>
-            <input id="ownerCodeInput" type="text" placeholder="Code propriétaire" style="text-transform:uppercase" />
-            <p id="ownerLoginErr" style="color:#fc8181;font-size:.85rem;margin-top:8px;display:none"></p>
-            <button onclick="loginOwner()" style="margin-top:14px;width:100%;padding:14px;background:linear-gradient(135deg,#ed8936,#dd6b20);border:none;border-radius:12px;color:#fff;font-weight:700;font-size:1rem;cursor:pointer">Accéder &#8594;</button>
-            <p style="margin-top:16px;text-align:center"><a href="#" onclick="show('loginScreen')" style="color:#ed8936;font-size:.9rem">&#8592; Retour connexion</a></p>
-        </div>
-    </div>
-    <div id="ownerScreen" class="hidden">
-        <div class="owner-hd">
-            <div>
-                <span style="font-size:1.4rem;font-weight:700">&#127968; Espace Propriétaire</span>
-                <div id="ownerLogBadge" style="font-size:.8rem;color:#a0aec0;margin-top:3px"></div>
-            </div>
-            <button onclick="logout()" style="background:#e53e3e;border:none;border-radius:8px;padding:8px 14px;color:#fff;font-size:.85rem;cursor:pointer">Déconnexion</button>
-        </div>
-        <div style="padding:16px">
-            <div style="display:flex;gap:10px;margin-bottom:16px">
-                <button id="ownerTabV" onclick="swOwnerTab('v')" style="flex:1;padding:10px;border:none;border-radius:8px;background:#667eea;color:#fff;font-weight:600;cursor:pointer">&#9989; Validations</button>
-                <button id="ownerTabI" onclick="swOwnerTab('i')" style="flex:1;padding:10px;border:none;border-radius:8px;background:#2d3748;color:#a0aec0;font-weight:600;cursor:pointer">&#9888;&#65039; Imprévus</button>
-            </div>
-            <div id="ownerDashCont"></div>
         </div>
     </div>
 <div id="appScreen" class="hidden">
@@ -199,7 +173,7 @@
     }
 
     function hide(){
-        ['loginScreen','supLoginScreen','ownerLoginScreen','appScreen','successScreen','supervisorScreen','ownerScreen'].forEach(function(id){
+        ['loginScreen','supLoginScreen','appScreen','successScreen','supervisorScreen'].forEach(function(id){
               document.getElementById(id).classList.add('hidden');
         });
     }
@@ -241,7 +215,6 @@
     document.getElementById('nt-i').addEventListener('click',function(){swTab('i');});
     document.getElementById('nt-l').addEventListener('click',function(){swTab('l');});
     
-        document.getElementById('linkOwner').addEventListener('click',function(e){e.preventDefault();showOwnerLogin();});
         document.getElementById('subBtn').addEventListener('click',submitAll);
 
     async function loginAgent(){
@@ -422,57 +395,6 @@
     }
 
     
-        function showOwnerLogin(){hide();document.getElementById('ownerLoginScreen').classList.remove('hidden');}
-        async function loginOwner(){
-          var code=document.getElementById('ownerCode').value.trim().toUpperCase();
-          if(!code)return;
-          toast('Vérification...');
-          var res=await sb.from('superviseurs').select('*').eq('code',code).single();
-          if(res.error||!res.data){document.getElementById('ownerErr').classList.remove('hidden');return;}
-          document.getElementById('ownerErr').classList.add('hidden');
-          ownerData=res.data;
-          document.getElementById('ownerBadge').textContent=ownerData.logement_code;
-          hide();
-          document.getElementById('ownerScreen').classList.remove('hidden');
-          loadOwnerDash();
-          if(osiv)clearInterval(osiv);
-          osiv=setInterval(loadOwnerDash,30000);
-        }
-        function swOwnerTab(t){
-          ostab=t;
-          ['v','i'].forEach(function(x){document.getElementById('ont-'+x).classList.toggle('on',x===t);});
-          loadOwnerDash();
-        }
-        async function loadOwnerDash(){
-          document.getElementById('ownerUpd').textContent='Mis à jour '+new Date().toLocaleTimeString('fr-FR');
-          var c=document.getElementById('ownerCont');
-          c.innerHTML='<div style="color:#718096;text-align:center;padding:30px;font-size:.85rem">Chargement...</div>';
-          var lg=ownerData.logement_code;
-          if(ostab==='v'){
-            var res=await sb.from('validations').select('*').eq('logement_code',lg).order('created_at',{ascending:false}).limit(100);
-            var data=res.data;
-            if(!data||!data.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucune validation pour ce logement</div>';return;}
-            var grp={};
-            data.forEach(function(v){var dt=new Date(v.created_at).toLocaleDateString('fr-FR');var k=dt+'__'+(v.heure||'');if(!grp[k])grp[k]={dt:dt,h:v.heure,tasks:[]};grp[k].tasks.push(v);});
-            var tot=Object.keys(grp).length;
-            var pics=data.filter(function(v){return v.photo_url;}).length;
-            var html='<div class="stats"><div class="stat"><div class="n">'+tot+'</div><div class="l">Sessions</div></div><div class="stat"><div class="n">'+pics+'</div><div class="l">Photos</div></div></div><div class="sec-tit">Historique du ménage</div>';
-            Object.values(grp).forEach(function(g){
-              var pills=g.tasks.map(function(t){return '<span class="pill">'+t.tache_nom+'</span>';}).join('');
-              var ph=g.tasks.filter(function(t){return t.photo_url;}).length;
-              var photoImgs=g.tasks.filter(function(t){return t.photo_url;}).map(function(t){return '<div style="margin-top:4px"><div style="font-size:.7rem;color:#a0aec0;margin-bottom:2px">'+t.tache_nom+'</div><img src="'+t.photo_url+'" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;display:block;" loading="lazy"></div>';}).join('');
-              html+='<div class="s-card"><h4>&#128197; <span class="s-t">'+g.dt+(g.h?' à '+g.h:'')+'</span></h4><div class="pills" style="margin-bottom:6px">'+pills+'</div>'+(ph>0?'<details style="margin-top:6px"><summary style="font-size:.75rem;color:#667eea;cursor:pointer;font-weight:600">&#128247; Voir '+ph+' photo(s)</summary><div style="margin-top:8px">'+photoImgs+'</div></details>':'<div style="font-size:.75rem;color:#a0aec0">Aucune photo</div>')+'</div>';
-            });
-            c.innerHTML=html;
-          } else {
-            var res2=await sb.from('imprevus').select('*').eq('logement_code',lg).order('created_at',{ascending:false}).limit(20);
-            var data2=res2.data;
-            if(!data2||!data2.length){c.innerHTML='<div style="color:#718096;text-align:center;padding:40px">Aucun imprévu signalé</div>';return;}
-            var html2='';
-            data2.forEach(function(imp){var dt=new Date(imp.created_at).toLocaleDateString('fr-FR');html2+='<div class="imp-card"><h4>&#9888;<span class="s-t">'+dt+(imp.heure?' à '+imp.heure:'')+'</span></h4><p style="margin-top:5px">'+imp.description+'</p>'+(imp.photo_url?'<img src="'+imp.photo_url+'" alt="">':'')+'</div>';});
-            c.innerHTML=html2;
-          }
-        }
         function loginSup(){
         if(document.getElementById('supPwd').value!=='SAMIR'){
               document.getElementById('supErr').classList.remove('hidden');
